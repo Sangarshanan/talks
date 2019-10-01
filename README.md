@@ -1,2 +1,0 @@
-# talks
-Talks and stuff
