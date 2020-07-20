@@ -12,3 +12,5 @@ Slides: https://speakerdeck.com/sangarshanan/spatial-thinking-with-python
 
 ### Interactive Mapmaking with Python
 
+
+Slides: https://interactive-mapmaking.netlify.app/
