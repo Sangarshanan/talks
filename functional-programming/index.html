@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FP Concepts</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="slides.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/mermaid/6.0.0/mermaid.min.css" />
+    </head>
+    <style>
+        .p {
+            text-align: left;
+        }
+        .reveal ul {
+            display: block;
+        }
+        .reveal ol {
+            display: block;
+        }
+        .remark-code, .remark-inline-code, .remark-code-line { font-family: 'Ubuntu Mono'}
+    </style>        
+    <body>
+        <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/6.0.0/mermaid.min.js"></script>
+        <script>
+            var slideshow = remark.create({
+                sourceUrl: "slides.md",
+                highlightLanguage: 'sml',
+                highlightStyle: 'monokai',
+                highlightLines: true,
+                ratio: '16:9'
+            });
+        </script>
+    </body>
+</html>
