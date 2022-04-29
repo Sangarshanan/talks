@@ -1,1 +1,1 @@
-just a showpiece, won't run, even if you ask nicely
+just a showpiece, might not run, even if you ask nicely

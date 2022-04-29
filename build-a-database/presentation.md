@@ -10,20 +10,22 @@ Ssshhh 🤫 ! just pretend you didn't see this
 
 ---
 
+# [fit] https://bit.ly/3EDwAAB
 
-## Code, Code & Code
+![inline center fit](./static/github.png)
 
-- https://bit.ly/3EDwAAB
 
 ^
 QR code, Most content is from first chapter of DDIA
+i am not gonna livecode not cause im scared but just cause i am a slow typer
 
 ---
 
 ![center fit](./static/sql-database.jpeg)
 
 ^
-one of the first projects i did intern, deciding on backend, all excited i suggest niche DBs, guy turn, this the new intern
+So a lil flashback sequence, imagine this scenario in black & white: i am an intern & for one of the first projects i was in, deciding on backend, all excited i suggest niche DBs, 
+everyone knows im intern
 gimme 3 reasons to not use postgres
 i was surprised cause devs love to play like to play around with cool new toys 
 and now i see myself saying it to people, becoming the very thing i swore to destroy
@@ -68,7 +70,7 @@ where heart is shaped like a heart and the smell of pie makes you float
 
 ^
 First we need to figure out how to talk to our DB
-fun fact databases are good listeners
+good for us databases are great listeners
 With our database tho, we are gonna use our friendly neighborhood terminal & do that
 we are gonna build a REPL
 
@@ -76,16 +78,12 @@ we are gonna build a REPL
 
 ##  Build-A-REPL 
 
+
 ```python
 def repl(database):
     session = PromptSession()
     while True:
-        try:
-            text = session.prompt(f"YeetDB@{database}> ")
-        except KeyboardInterrupt:
-            continue  # Control-C pressed. Try again.
-        except EOFError:
-            break  # Control-D pressed.
+        text = session.prompt(f"YeetDB@{database}> ")
         try:
             qe = QueryExecutor(text)
             result, operation, time = qe.run()
@@ -152,7 +150,7 @@ class QueryExecutor(object):
 ```
 
 ^
-Once we our language, we can kinda see what the query executor is gonna do, its gonna parse the query to understand it
+we have sql, we see what query executor is gonna do, its gonna parse the query to understand it,
 plan the execution and then just execute it and return the results
 lets look at an example
 
@@ -160,7 +158,7 @@ lets look at an example
 
 [.column]
 
-### i write a query
+###  i write a query
 
 ```sql
 SELECT *
@@ -169,7 +167,7 @@ customer
 WHERE
 name = 'Jojo'
 ```
-![100%](./static/write_query.png)
+![80%](./static/write_query.png)
 
 
 [.column]
@@ -177,13 +175,13 @@ name = 'Jojo'
 
 ### i get parsed
 
-- SELECT : dml
--  * : wildcard
-- FROM : dql
-- customer - tableref
-- WHERE : dql
-- name : columnref
-- = : operator, Jojo : const
+1. SELECT : dml
+2.  * : wildcard
+3. FROM : dql
+4. customer - tableref
+5. WHERE : dql
+6. name : columnref
+7. = : operator, Jojo : const
 
 ---
 
@@ -206,15 +204,16 @@ name = 'Jojo'
 
 
 ^
-So now comes the data part of our database, Finally he said begrudgingly
-this is where the fun begins
+the base is over now cause we can talk to DB 
+now comes the data part, where the fun begins
+why not just save to memory
 
 ---
 
 ## In-Memory 🕯️
 
 ```python
-class Data:
+class DataBase:
     def __init__(self, table):
         self.table = table
         self.database = {}
@@ -225,11 +224,14 @@ class Data:
         self.database[self.table][key] = value
     
     def select(self,key):
-        return self.database[self.table][key]
+        return self.database[self.table].get(key)
     
     def delete(self, key):
         self.database[self.table].pop(key)
 ```
+
+^
+create a hashmap for every table and insert a new key for every day
 
 ---
 
@@ -305,8 +307,9 @@ we make it cache and use it to lookup where the actual data
 ![fit](./static/index_meme.png)
 
 ^
-Introducing Indexes, what a concept
-we maintain an additional structure we write to but reads are gonna be much faster
+these are called Indexes
+we maintain an additional structure we write to, but reads are gonna be much faster
+we just index on id or primary key
 Lets start simple with
 
 ---
@@ -324,6 +327,8 @@ so if someone is looking for key 2 they can directly seek the 9th byte offset in
 
 ---
 
+
+[.column]
 
 ```python
 class HashIndex:
@@ -344,15 +349,30 @@ class HashIndex:
             "data_size": len(f"{value}"),
             "data": f"{value}"
         }
-    def get(self, key):
-        # Read from Offset and length
-        try:
-            return self.index[key]["data"]
-        except:
-            MissingDataException()
 ```
 
+[.column]
+
+```python
+def get(self, key):
+    # Read from Offset and length
+    try:
+        return self.index[key]["data"]
+    except:
+        MissingDataException()
+
+def delete(self,key):
+    key_index = self.index[key]
+    with open(self.name, 'a') as f:
+        char = f.seek(key_index["offset"])
+        # Tombstone
+        f.write(encode(f"{key}<EOK><NAN><EOP>"))
+    self.index.pop(key, None)
+```
+
+
 ^
+know length of our record to get the offset we needs to read till
 Great we solved our speed issue but still got ever growing append-nly log file
 avoid eventually running out of disk space ?
 
@@ -363,7 +383,7 @@ avoid eventually running out of disk space ?
 ![inline fit center](./static/two-of-em.gif)
 
 ^
-A good solution is to break the log into segments of a cer‐ tain size by closing a segment file when it reaches a certain size, and making subsequent writes to a new segment file.
+A good solution is to break the log into segments of a certain size by closing a segment file when it reaches a certain size, and making subsequent writes to a new segment file.
 which means we will have duplicate inserts & should read the latest log, to do that we do something called compaction
 We can then perform compaction on these segments. Compaction means throwing away duplicate keys in the log, and keeping only the most recent update for each key.
 
@@ -516,15 +536,25 @@ a B-tree with n keys always has a depth of O(log n)
 ^
 I have not done this in my DB, but here are some ideas to implement based on what real DBs do
 Rather than overwriting pages, we can create a copy and then just change the reference
-this actually lets us do some super cool things, if someone is say reading the data at 8 AM
-we take a snapshot of the btree and then updates after that just point to new pages which the 8 AM query
-has no idea about, so even if the query takes hours to run its gonna give you the state of the DB at 8AM
-This is gonna sound crazy but this means we are gonna have a million versions of our data moving around
-and actually makes concurrency a piece of cake, This idea is what relational DBs called MVCC
-To ensure more consistency, We also have WAL logs which is just a log of all operations the happen to the btree so that we can regenerate a consistent btree state after a DB crash
-latches and locks on pages so writes are serializable, when we have paralell operation we need some kind of semaphore
-This is just the beginning we have so many more cooler things, like we havent broken down ACID proprties, Transcations & when we make our DB distributed, its a whole other realm
-if this gives you goosebumps, lets talk about more it 
+this actually lets us do some super cool things, MVCC
+To ensure more consistency, We also have WAL logs which is just a log of all operations the happen to the btree
+ like we haven't broken down ACID properties, Transactions & when we make our DB distributed, its a whole other realm
+if this gives you goosebumps, lets talk about more it
+
+---
+
+![inline fit](./static/ep2022.png)
+
+- Mon 11 - Tue 12 Jul: Tutorials & Workshops
+- Wed 13 - Fri 15 Jul:  Conference talks & sponsor exhibition
+- Sat 16 - Sun 17 Jul: Sprints
+
+
+^
+a small plug about, amazing conf on the other side of the atlantic
+Trans*code, Makers fest, Beginners day workshop, Django girls
+fin aid
+schedules going to be out next week-ish
 
 ---
 
