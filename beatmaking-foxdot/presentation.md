@@ -54,7 +54,12 @@ with TkinterGUI**
 **✍️ Has its own IDE**
 
 ^
-how much time do you have? basically synth is electronic musical instrument that generates audio signals of different waveforms that sound different, i.e we have sine, square, sawtooth waveforms that sound different
+what is a synth? how much time do you have? basically synth is electronic musical instrument that generates audio signals of different waveforms that sound different, i.e we have sine, square, sawtooth waveforms that sound different
+
+
+---
+
+![inline center fit](./static/dia.png)
 
 
 ---
@@ -128,6 +133,13 @@ well what is a Synth?
 - Now onto the notes, we have a list of integers [0,1,2,3], here number 0 is the first/root note which C followed by D,E,F,G,A,B. and going back by one will give me notes below middle C, so -2 is A that is below C
 just imagine that the middle C note of the piano is 0, and then count white keys up or down.
 
+
+---
+
+## Synth Definitions
+
+>>> print(SynthDefs)
+['loop', 'stretch', 'play1', 'play2', 'audioin', 'noise', 'dab', 'varsaw', 'lazer', 'growl', 'bass', 'dirt', 'crunch', 'rave', 'scatter', 'charm', 'bell', 'gong', 'soprano', 'dub', 'viola', 'scratch', 'klank', 'feel', 'glass', 'soft', 'quin', 'pluck', 'spark', 'blip', 'ripple', 'creep', 'orient', 'zap', 'marimba', 'fuzz', 'bug', 'pulse', 'saw', 'snick', 'twang', 'karp', 'arpy', 'nylon', 'donk', 'squish', 'swell', 'razz', 'sitar', 'star', 'jbass', 'sawbass', 'prophet', 'pads', 'pasha', 'ambi', 'space', 'keys', 'dbass', 'sinepad']
 
 ---
 

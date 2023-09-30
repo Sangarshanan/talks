@@ -33,9 +33,14 @@ print(P[:8].shuffle()) # Pattern Methods
 
 print(P[:8].every(3, "reverse"))
 
+p1 >> pluck(P[:4].every(1, "reverse")) # Pattern object
+
 # reverse, swap, rotate, stretch, trim etc...
 
-p1 >> pads(P[:8].map(lambda x: x+7 if x % 2 == 0 else x))
+# One octave higher for even notes
+p1 >> pads(P[:8].map(
+    lambda x: x+7 if x % 2 == 0 else x)
+)
 
 # Them Scales
 
@@ -60,12 +65,31 @@ p1 >> blip(
 
 # Time Var
 
+var(
+    [ LIST os Values ],
+    [ LIST of durations]
+)
+
+print(var([0,4], 1))
+
 a = var([0,5,1,3], [2, 1, 2, 1])
 p1 >> bass(a, dur=1/2)
 
 # Advanced Timevars
+
+print(var([0,1]), linvar([0,1]))
+
 # `linvar`: Changing between values at a linear rate
 p1 >> pluck(P[3:5], amp=linvar([0, 1], 8), dur=1/2)
+
+# Any parameter can be a TimeVar
+
+p1 >> dirt(
+    [0, 6, 4, 2], 
+    dur=1/4, 
+    hpf=linvar([0, 4000], [16, 0]), 
+    pan=linvar([-1,1], 4)
+)
 
 p1.stop() # stop
 
@@ -115,6 +139,11 @@ d1 >> play("<V:><  * ><[--]>") # JUJU
 d1.stop()
 d2.stop()
 
+m2.stop()
+
+b1.stop()
+m1.stop()
+
 # Cover
 
 bpm = 120
@@ -126,7 +155,7 @@ d1 >> play('x-o-x-o-', dur=0.5)
 d1 >> play("x-o{-[-(-o)]}", sample=0)
 
 bass_notes =  [0,3,1.5,1]
-b1 >> bass(bass_notes, dur=2, amp=0.5)
+b1 >> bass(bass_notes, dur=2, amp=1)
 
 mel_notes = [
     0, 1.5, 4, 4.5, 7, 4.5, 4,
@@ -136,13 +165,11 @@ mel_dur = [
   0.5, 0.5, 0.5, 0.5, 1.5, 0.5, 1.5,
   0.5, 0.1, 0.1, 0.3, 0.5, 0.5, 0.5    
     ]
-m1 >> orient(mel_notes, dur=mel_dur, bpm=bpm, amp=0.5)
+m1 >> orient(mel_notes, dur=mel_dur, bpm=bpm, amp=0.8)
 
-
-m2 >> prophet(
+m2 >> sinepad(
     [8, 7, 4, 3, 1.5, 1, 0], 
     dur=[i*2 for i in [0.5, 0.5, 0.5, 1, 0.5, 0.5, 0.5]],
-    bpm=bpm, amp=0.5
+    bpm=bpm, oct=5.5, room=0.5, mix=0.2
 )
-
 
