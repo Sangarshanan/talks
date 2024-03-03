@@ -12,8 +12,10 @@ end
 
 use_bpm 110
 
-k = "~/Downloads/samples/808_drum_kit/kicks/808-Kicks05.wav"
-c = "~/Downloads/samples/808_drum_kit/snares/808-Clap05.wav"
+k = :drum_heavy_kick
+c = :sn_dolf
+ch = :hat_bdu
+oh = :drum_cymbal_open
 
 
 live_loop :kick do
@@ -32,8 +34,8 @@ end
 
 use_bpm 100
 
-kick = "~/Downloads/samples/808_drum_kit/kicks/808-Kicks05.wav"
-clap = "~/Downloads/samples/808_drum_kit/snares/808-Clap05.wav"
+kick = :drum_heavy_kick
+clap = :sn_dolf
 
 grid1= [
   1,0,0,0, 2,0,0,0,
@@ -52,10 +54,11 @@ end
 
 use_bpm 100
 
-kick = "~/Downloads/samples/808_drum_kit/kicks/808-Kicks05.wav"
-clap = "~/Downloads/samples/808_drum_kit/snares/808-Clap05.wav"
-hat1 = "~/Downloads/samples/808_drum_kit/hihats/808-HiHats05.wav"
-hat2 = "~/Downloads/samples/808_drum_kit/hihats/808-OpenHiHats18.wav"
+
+kick = :drum_heavy_kick
+clap = :sn_dolf
+hat1 = :hat_bdu
+hat2 = :drum_cymbal_open
 
 grid1= [
   1,0,3,0, 2,0,3,0,
@@ -78,10 +81,10 @@ end
 
 use_bpm 110
 
-k = "~/Downloads/samples/808_drum_kit/kicks/808-Kicks05.wav"
-c = "~/Downloads/samples/808_drum_kit/snares/808-Clap05.wav"
-ch = "~/Downloads/samples/808_drum_kit/hihats/808-HiHats05.wav"
-oh = "~/Downloads/samples/808_drum_kit/hihats/808-OpenHiHats18.wav"
+k = :drum_heavy_kick
+c = :sn_dolf
+ch = :hat_bdu
+oh = :drum_cymbal_open
 
 live_loop :kick do
   ##| stop
@@ -112,9 +115,9 @@ end
 
 use_bpm 140
 
-kick = "~/Downloads/samples/808_drum_kit/kicks/808-Kicks08.wav"
-snare = "~/Downloads/samples/808_drum_kit/snares/808-Snare10.wav"
-hat1 = "~/Downloads/samples/808_drum_kit/hihats/808-HiHats09.wav"
+kick = :drum_heavy_kick
+snare = :sn_dolf
+hat1 = :hat_bdu
 
 kick_snare= [
   1,0,0,0, 0,0,0,0,
@@ -148,9 +151,9 @@ end
 
 use_bpm 120
 
-k = "~/Downloads/samples/808_drum_kit/kicks/808-Kicks05.wav"
-c = "~/Downloads/samples/808_drum_kit/snares/808-Clap05.wav"
-ch = "~/Downloads/samples/808_drum_kit/hihats/808-HiHats05.wav"
+k = :drum_heavy_kick
+c = :sn_dolf
+ch = :hat_bdu
 
 live_loop :kick do
   at [1, 3, 5, 7] do
@@ -171,9 +174,9 @@ end
 
 use_bpm 120
 
-k = "~/Downloads/samples/808_drum_kit/kicks/808-Kicks05.wav"
-c = "~/Downloads/samples/808_drum_kit/snares/808-Clap05.wav"
-ch = "~/Downloads/samples/808_drum_kit/hihats/808-HiHats05.wav"
+k = :drum_heavy_kick
+c = :sn_dolf
+ch = :hat_bdu
 
 define :drum_pattern do |pattern|
   v = pattern.tick(:pattern)
@@ -263,7 +266,7 @@ end
 
 ##################
 
-kick = "~/Downloads/samples/808_drum_kit/kicks/808-Kicks02.wav"
+kick = :drum_heavy_kick
 swing_time = 0.1
 
 define :play_kick do
